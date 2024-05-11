@@ -166,7 +166,7 @@ class OS_CONST_TYPE(type):
 
 
 class OSConst(metaclass=OS_CONST_TYPE):
-  systemd_redhat_os_major_versions = ["7"]
+  systemd_redhat_os_major_versions = ["7", "8"]
 
 
 class OSCheck:
