@@ -626,4 +626,10 @@
     </depends-on>
     <on-ambari-upgrade add="true"/>
   </property>
+  <property>
+    <name>yarn.webapp.ui2.enable</name>
+    <value>true</value>
+    <description>In the server side it indicates whether the new YARN-UI v2 is enabled or not.</description>
+    <on-ambari-upgrade add="true"/>
+  </property>
 </configuration>
