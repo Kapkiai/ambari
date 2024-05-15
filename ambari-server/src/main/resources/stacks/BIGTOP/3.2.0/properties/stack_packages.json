@@ -269,6 +269,19 @@
           "STANDARD": [
             "spark-thriftserver"
           ]
+        },
+        "SPARK_CONNECT": {
+          "STACK-SELECT-PACKAGE": "spark-connect",
+          "INSTALL": [
+            "spark-connect",
+            "spark-client"
+          ],
+          "PATCH": [
+            "spark-connect"
+          ],
+          "STANDARD": [
+            "spark-connect"
+          ]
         }
       },
       "FLINK": {

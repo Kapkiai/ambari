@@ -45,7 +45,8 @@ sudo = AMBARI_SUDO_BINARY
 SERVER_ROLE_DIRECTORY_MAP = {
   'SPARK_JOBHISTORYSERVER' : 'spark-historyserver',
   'SPARK_CLIENT' : 'spark-client',
-  'SPARK_THRIFTSERVER' : 'spark-thriftserver'
+  'SPARK_THRIFTSERVER' : 'spark-thriftserver',
+  'SPARK_CONNECT' : 'spark-connect'
 }
 
 HIVE_SERVER_ROLE_DIRECTORY_MAP = {
