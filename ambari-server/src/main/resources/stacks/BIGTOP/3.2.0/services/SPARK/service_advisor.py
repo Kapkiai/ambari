@@ -144,7 +144,7 @@ class SparkServiceAdvisor(service_advisor.ServiceAdvisor):
     return validator.validateListOfConfigUsingMethod(configurations, recommendedDefaults, services, hosts, validator.validators)
 
   def isComponentUsingCardinalityForLayout(self, componentName):
-    return componentName in ('SPARK_THRIFTSERVER')
+    return componentName in ('SPARK_THRIFTSERVER', 'SPARK_CONNECT')
 
   @staticmethod
   def isKerberosEnabled(services, configurations):

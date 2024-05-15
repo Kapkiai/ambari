@@ -122,6 +122,54 @@
           </logs>
         </component>
         <component>
+          <name>SPARK_CONNECT</name>
+          <displayName>Spark Connect</displayName>
+          <category>SLAVE</category>
+          <cardinality>0+</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <dependencies>
+            <dependency>
+              <name>HDFS/HDFS_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>MAPREDUCE2/MAPREDUCE2_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>YARN/YARN_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>HIVE/HIVE_METASTORE</name>
+              <scope>cluster</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+          </dependencies>
+          <commandScript>
+            <script>scripts/spark_connect_server.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+          <logs>
+            <log>
+              <logId>spark_connect</logId>
+              <primary>true</primary>
+            </log>
+          </logs>
+        </component>
+        <component>
           <name>SPARK_CLIENT</name>
           <displayName>Spark Client</displayName>
           <category>CLIENT</category>
@@ -220,6 +268,9 @@
             </package>
             <package>
               <name>spark_${stack_version}-datanucleus</name>
+            </package>
+            <package>
+              <name>spark_${stack_version}-connect</name>
             </package>
           </packages>
         </osSpecific>

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -18,23 +18,19 @@ limitations under the License.
 
 """
 
+from resource_management.libraries.script import Script
 from resource_management.libraries.functions.format import format
-from resource_management.libraries.script.script import Script
 from resource_management.libraries.functions.default import default
+from resource_management.libraries.functions.version import format_stack_version
+from resource_management.libraries.functions.stack_features import check_stack_feature
+from resource_management.libraries.functions import StackFeature
 
-config = Script.get_config()
+config  = Script.get_config()
+tmp_dir = Script.get_tmp_dir()
 
-spark_user = config['configurations']['spark-env']['spark_user']
-spark_group = config['configurations']['spark-env']['spark_group']
-user_group = config['configurations']['cluster-env']['user_group']
-
-if 'hive-env' in config['configurations']:
-  hive_user = config['configurations']['hive-env']['hive_user']
-else:
-  hive_user = "hive"
-
-spark_pid_dir = config['configurations']['spark-env']['spark_pid_dir']
-spark_history_server_pid_file = format("{spark_pid_dir}/spark-{spark_user}-org.apache.spark.deploy.history.HistoryServer-1.pid")
-spark_thrift_server_pid_file = format("{spark_pid_dir}/spark-{spark_user}-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1.pid")
-spark_connect_pid_file = format("{spark_pid_dir}/spark-{spark_user}-org.apache.spark.sql.connect.service.SparkConnectServer-1.pid")
 stack_name = default("/clusterLevelParams/stack_name", None)
+stack_version_unformatted = config['clusterLevelParams']['stack_version']
+stack_version_formatted = format_stack_version(stack_version_unformatted)
+stack_supports_pid = stack_version_formatted and check_stack_feature(StackFeature.RANGER_KMS_PID_SUPPORT, stack_version_formatted)
+ranger_kms_pid_dir = default("/configurations/kms-env/ranger_kms_pid_dir", "/var/run/ranger_kms")
+ranger_kms_pid_file = format('{ranger_kms_pid_dir}/rangerkms.pid')

@@ -128,15 +128,6 @@
   </property>
   
   <property>
-    <name>spark.yarn.executor.failuresValidityInterval</name>
-    <value>2h</value>
-    <description>
-      Defines the validity interval for executor failure tracking.
-      Executor failures which are older than the validity interval will be ignored.
-    </description>
-    <on-ambari-upgrade add="false" />
-  </property>
-  <property>
     <name>spark.yarn.maxAppAttempts</name>
     <value>1</value>
     <description>

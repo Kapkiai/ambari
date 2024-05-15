@@ -93,6 +93,7 @@ hive_conf_dir = format("{hive_home}/conf")
 
 spark_daemon_memory = config['configurations']['spark-env']['spark_daemon_memory']
 spark_thrift_server_conf_file = spark_conf_dir + "/spark-defaults.conf"
+spark_connect_conf_file = spark_conf_dir + "/spark-defaults.conf"
 java_home = config['ambariLevelParams']['java_home']
 
 hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
@@ -116,6 +117,7 @@ default_metastore_catalog = config['configurations']['spark-hive-site-override']
 
 spark_history_server_pid_file = status_params.spark_history_server_pid_file
 spark_thrift_server_pid_file = status_params.spark_thrift_server_pid_file
+spark_connect_pid_file = status_params.spark_connect_pid_file
 
 spark_history_server_start = format("{spark_home}/sbin/start-history-server.sh")
 spark_history_server_stop = format("{spark_home}/sbin/stop-history-server.sh")
@@ -123,6 +125,9 @@ spark_history_server_stop = format("{spark_home}/sbin/stop-history-server.sh")
 spark_thrift_server_start = format("{spark_home}/sbin/start-thriftserver.sh")
 spark_thrift_server_stop = format("{spark_home}/sbin/stop-thriftserver.sh")
 spark_hadoop_lib_native = format("{hadoop_home}/lib/native:{hadoop_home}/lib/native/Linux-amd64-64")
+
+spark_connect_start = format("{spark_home}/sbin/start-connect-server.sh")
+spark_connect_stop = format("{spark_home}/sbin/stop-connect-server.sh")
 
 run_example_cmd = format("{spark_home}/bin/run-example")
 spark_smoke_example = "SparkPi"
@@ -216,6 +221,9 @@ if has_spark_thriftserver and 'spark-defaults' in config['configurations']:
 
   if 'spark-thrift-fairscheduler' in config['configurations'] and 'fairscheduler_content' in config['configurations']['spark-thrift-fairscheduler']:
     spark_thrift_fairscheduler_content = config['configurations']['spark-thrift-fairscheduler']['fairscheduler_content']
+
+# connect server support
+spark_connect_cmd_opts_properties = ''
 
 if is_hive_installed:
   # update default metastore client properties (async wait for metastore component) it is useful in case of

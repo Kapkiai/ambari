@@ -156,6 +156,25 @@ def spark_service(name, upgrade_type=None, action=None):
       if not hive_connection_created:
         raise ComponentIsNotRunning("Something goes wrong, STS connection was not created but STS process still alive. "
                                     "Potential problems: Hive/YARN doesn't work correctly or too slow. For more information check STS logs.")
+    
+    elif name == 'sparkconnect':
+      import status_params
+      if params.security_enabled:
+        hive_kinit_cmd = format("{kinit_path_local} -kt {hive_kerberos_keytab} {hive_kerberos_principal}; ")
+        Execute(hive_kinit_cmd, user=params.spark_user)
+
+      connect_no_op_test= as_sudo(["test", "-f", params.spark_connect_pid_file]) + " && " + as_sudo(["pgrep", "-F", params.spark_connect_pid_file])
+      try:
+        Execute(format('{spark_connect_start} --properties-file {spark_connect_conf_file} {spark_connect_cmd_opts_properties}'),
+                user=params.spark_user,
+                environment={'JAVA_HOME': params.java_home},
+                not_if=connect_no_op_test
+        )
+      except:
+        show_logs(params.spark_log_dir, user=params.spark_user)
+        raise
+
+      ## TODO check whether the process has started successfully
 
   elif action == 'stop':
     if name == 'jobhistoryserver':
@@ -181,6 +200,19 @@ def spark_service(name, upgrade_type=None, action=None):
         show_logs(params.spark_log_dir, user=params.spark_user)
         raise
       File(params.spark_thrift_server_pid_file,
+        action="delete"
+      )
+
+    elif name == 'sparkconnect':
+      try:
+        Execute(format('{spark_connect_stop}'),
+                user=params.spark_user,
+                environment={'JAVA_HOME': params.java_home}
+        )
+      except:
+        show_logs(params.spark_log_dir, user=params.spark_user)
+        raise
+      File(params.spark_connect_pid_file,
         action="delete"
       )
 

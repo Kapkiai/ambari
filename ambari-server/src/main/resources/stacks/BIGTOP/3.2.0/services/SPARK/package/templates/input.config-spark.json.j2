@@ -26,6 +26,11 @@
       "type":"spark_thriftserver",
       "rowtype":"service",
       "path":"{{default('/configurations/spark-env/spark_log_dir', '/var/log/spark')}}/spark-*-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2*.out"
+    },
+    {
+      "type":"spark_connect",
+      "rowtype":"service",
+      "path":"{{default('/configurations/spark-env/spark_log_dir', '/var/log/spark')}}/spark-*-org.apache.spark.sql.connect.service.SparkConnectServer*.out"
     }
   ],
   "filter":[
@@ -36,7 +41,8 @@
           "type":[
             "spark_jobhistory_server",
             "spark_thriftserver",
-            "livy2_server"
+            "livy2_server",
+            "spark_connect"
           ]
         }
       },
