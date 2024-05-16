@@ -17,7 +17,7 @@
 -->
 <metainfo>
   <schemaVersion>2.0</schemaVersion>
-  <services>
+  <services name>
     <service>
       <name>HBASE</name>
       <displayName>HBase</displayName>

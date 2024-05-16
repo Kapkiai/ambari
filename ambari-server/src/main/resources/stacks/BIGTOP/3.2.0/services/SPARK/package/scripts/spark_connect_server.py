@@ -50,7 +50,7 @@ class SparkConnect(Script):
     env.set_params(params)
 
     self.configure(env)
-    spark_service('sparkconnnect', upgrade_type=upgrade_type, action='start')
+    spark_service('sparkconnect', upgrade_type=upgrade_type, action='start')
 
   def stop(self, env, upgrade_type=None):
     import params
