@@ -300,7 +300,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>rpm-maven-plugin</artifactId>
-        <version>2.1.4</version>
+        <version>2.3.0</version>
         <executions>
           <execution>
             <!-- unbinds rpm creation from maven lifecycle -->
@@ -317,6 +317,13 @@
           <requires>
             <require>${rpm.dependency.list}</require>
           </requires>
+          <defineStatements>
+            <defineStatement>__python python3</defineStatement>
+            <defineStatement>_build_id_links none</defineStatement>
+            <defineStatement>_missing_build_ids_terminate_build %{nil}</defineStatement>
+            <defineStatement>debug_package %{nil}</defineStatement>
+            <defineStatement>__brp_mangle_shebangs %{nil}</defineStatement>
+          </defineStatements>
           <postinstallScriptlet>
             <scriptFile>src/main/package/rpm/postinstall.sh</scriptFile>
             <fileEncoding>utf-8</fileEncoding>
